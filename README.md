@@ -1,33 +1,63 @@
 # Auto Trello Quick Add
 
-A user script that automates the Trello card quick-add flow by automatically
-clicking the "Send to" and "Done" buttons on Trello's quick add card page.
+A bookmarklet and user script that automates the Trello card quick-add flow by
+automatically clicking the "Send to" and "Done" buttons on Trello's quick add
+card page.
 
 ## Description
 
-This script streamlines the process of adding cards to Trello boards via the
-quick add URL (`https://trello.com/en/add-card*`). It automatically:
+The bookmarklet and script streamline the process of adding cards to Trello
+boards via the quick add URL (`https://trello.com/en/add-card*`). When you
+click the bookmarklet, the script kicks off and automatically:
 
 1. Clicks the "Send to" button as soon as it's available.
-2. Clicks the "Done" button after the card has been sent.
+1. Clicks the "Done" button after the card has been sent.
 
 ## Installation
 
+1. Install the bookmarklet. See the code below.
 1. Install [Tampermonkey](https://www.tampermonkey.net/).
-2. Create a new script in your user script manager and copy the contents of
+1. Create a new script in your user script manager and copy the contents of
    `main.js` into it.
-3. Save the script.
+1. Save the script.
 
 ## Usage
 
-1. Navigate to a Trello quick add URL.
-2. The script will automatically click the "Send to" button and then the "Done"
+1. Click the bookmarklet.
+1. The script will automatically click the "Send to" button and then the "Done"
    button.
 
 ## How It Works
 
+The bookmarklet opens the Trello card quick-add flow already property set.
+
 The script uses `MutationObserver`s to detect when the buttons are available in
-the DOM and clicks them automatically.
+the Trello flow's DOM and clicks them automatically.
+
+## Bookmarklet
+
+```
+javascript:(function(win){win.open('https://trello.com/en/add-card?source=%27+win.location.host+%27&mode=popup&url=%27+encodeURIComponent(win.location.href)+%27&idList=598c69441c673ec6b256a221%27,%27add-trello-card%27,%27width=500,height=600,left=%27+(win.screenX+(win.outerWidth-500)/2)+%27,top=%27+(win.screenY+(win.outerHeight-740)/2));})(window);
+```
+
+### The unescaped JavaScript
+
+```javascript
+(function(win) {
+    win.open(
+        'https://trello.com/en/add-card' +
+        '?source=' + win.location.host +
+        '&mode=popup' +
+        '&url=' + encodeURIComponent(win.location.href) +
+        '&idList=598c69441c673ec6b256a221',
+        'add-trello-card',
+        'width=500,height=600,left=' +
+        (win.screenX + (win.outerWidth - 500) / 2) +
+        ',top=' +
+        (win.screenY + (win.outerHeight - 740) / 2)
+    );
+})(window);
+```
 
 ## License
 
